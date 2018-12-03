@@ -1,0 +1,29 @@
+combines next generation non volatile 3d cross memory with intel advance system memory controller and 
+interface hw and sw enhancements
+
+
+3d cross memory dense--> pack lots of capacity into  atiny footprint, 
+slicing some microscopic layers into columns each memory cell and selector 
+connect with cropsspoint structure perpendicular wires, enables memory cell to be individually addressed
+by selecting 1 wire on top and another on the bottom.
+We can stack this 3dimensionally to maximize density
+
+DRAM needs a transitor on each memory cell to access or modify the cell, making DRAM big and expensive
+INTEL OPTANE CAN BE WRITTEN O READ BY SIMPLY VARYING THE VOLTAGE SENT TO ITS SELECTOR
+ELIMINATING THE NEED OF TRANSISTORS
+
+SIMPLE, STACKABLE, TRANSISTOR LESS DESIGN
+GREATER CAPACITY IN THE SAME SPACE
+LOW LATENCY IS SHORTER THAN DRAM 
+IDEAL FOR ALL DEVICES APPS OR SERVICES REQUIRING FAST ACCESS TO LARGE SETS OF DATA
+
+UNPARALLEL COMBINATION OF SPEED, DENSITY AND NON VOLATILITY
+
+DESIGNERS GAMERS, FILMMAKERS
+accelerates computers responsiveness
+access frecuently docs photos videos and apps quickly
+
+
+IOPS
+Input Output operations per second
+(eye-ops)

@@ -1,0 +1,187 @@
+
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+      	// System.in -> InputStream de la consola
+		// System.getenv("OUTPUT_PATH") -> String con la ruta al archivo de salida.
+      	// HR tomará ésta ruta como la única salida del programa.
+
+      /* Agrega tu código aquí.
+         Puedes usar System.out.println() para debuggear.
+         Puedes también agregar los métodos y/o clases que necesites.
+         El nombre de la clase que vayas a entregar deberá llamarse "Solution". */
+        
+      // El programa deberá:
+      // 1. Leer desde la consola el texto que representa la lista de números. [Usar IO/NIO/NIO.2 según se requiera]
+        //convertirlo a string
+        int[] dates = null;
+        String num = null;
+        try{
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        num = in.readLine();
+        }catch(Exception e){
+            
+        }
+        
+        String[]splitted = num.split(",");
+        dates = new int[splitted.length];
+        for(int y = 0; y < splitted.length; y++) {
+        dates[y] = Integer.parseInt(splitted[y]);
+        }
+        
+        //revisar que se leyó bien
+        
+        
+      // 2. Procesar la lista de números para procesar cada uno. Recuerda que están separados por "," (coma). [Puedes usar concurrencia si consideras que mejora el desempeño]
+        // 3. Intentar construir fechas válidas, omitiendo los números que no sirvan para construir una fecha (AA MM DD). [Puedes usar concurrencia si consideras que mejora el desempeño]]
+        boolean bisiesto = false;
+        ArrayList<Date> confirmedDates = new ArrayList();
+        int i=0,j=0, year=0,month=0,day=0; //j es el que va recorriendo confirmedDates, se incrementa hasta que haya una fecha completa
+        
+        while(i<dates.length){
+            //revisar año
+            if(dates[i]>18){
+                year = dates[i]+1900;
+                if((year%4 ==0 && year%100 ==0)||(year%400==0))
+                    bisiesto = true;
+                i++;
+            }
+            else{
+                year =dates[i]+2000;
+                if((year%4 ==0 && year%100 ==0)||(year%400==0))
+                    bisiesto = true;
+                i++;
+            }
+        //revisar mes
+            while(i<dates.length){
+                 if(dates[i] >0 && dates[i]<=12){
+                    month = dates[i];
+                    i++;
+                     break;
+                }
+                else{
+                    i++;
+                }
+            }
+            //si no encontró ningun mes válido en todo el arreglo, se sale
+            if(i == dates.length)
+                break;
+            else{
+                while(i<dates.length){
+                 if(month ==1 || month ==3 || month==5 || month==7 
+                   || month ==8 || month==10 || month==12){
+                     if(dates[i]>0 && dates[i]<=31){
+                         day =dates[i];
+                         i++;
+                         break;
+                     }
+                     else
+                         i++;
+                }
+                else if(month == 2){
+                        if(bisiesto){
+                            if(dates[i]>0 && dates[i]<=29){
+                             day =dates[i];
+                                i++;
+                             break;
+                             }
+                             else
+                                i++;
+                        }
+                        else if(dates[i]>0 && dates[i]<=28){
+                            day = dates[i];
+                            i++;
+                            break;
+                        }
+                         else
+                           i++;
+                    }
+                else{
+                    if(dates[i]>0 && dates[i]<=30){
+                     day =dates[i];
+                        i++;
+                     break;
+                }
+                 else
+                     i++;
+                }
+            }
+                //si no se encontró ningun día valido
+            if(i == dates.length)
+                break;
+            else{
+                //al llegar aqui si encontro una fecha y la añade al arreglo de Dates
+                confirmedDates.add(new Date(year,month,day));
+                System.out.println(confirmedDates.get(j).getYear());
+                break;
+            }
+        }
+        }
+
+        
+      // 4. Obten de cada fecha identificada/construida el nombre del día. [API para manejo del tiempo, concurrencia]
+     // 5. Cuenta cuántas veces ocurre el día de la semana por todas las fechas. [Programación funcional, concurrencia]
+        //Map<String,Integer> dayOfWeek;
+        int mon=0,tue=0,wed=0,thu=0,fri=0,sat=0,sun=0;
+            
+        for(int a = 0; a < confirmedDates.size(); a++){
+            
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(confirmedDates.get(a));
+            int dow = calendar.get(Calendar.DAY_OF_WEEK);
+            if(dow == 1)
+                mon++;
+            else if(dow ==2)
+                tue++;
+            else if(dow == 3)
+                wed++;
+            else if(dow == 4)
+                thu++;
+            else if(dow == 5)
+                fri++;
+            else if(dow == 6)
+                sat++;
+            else if(dow ==7)
+                sun++;
+        }
+        if(confirmedDates.size()>0){
+           
+            
+      // 6. Escribe en el flujo de salida al archivo "OUTPUT_PATH" la tabla, cuidando el orden natural (alfabético).
+     try{
+      FileOutputStream fos = new FileOutputStream(System.getenv("OUTPUT_PATH"));
+      ObjectOutputStream oos = new ObjectOutputStream(fos);
+    
+         if(mon >0){
+              oos.writeObject("Monday="+mon);}
+            if(tue > 0){
+               oos.writeObject("Tuesday="+tue);}
+            if(wed > 0){
+               oos.writeObject("Wednesday="+wed);}
+            if(thu > 0){
+               oos.writeObject("Thursday="+thu);}
+            if(fri > 0){
+                oos.writeObject("Friday="+fri);}
+            if(sat > 0){
+                oos.writeObject("Saturday="+sat);}
+            if(sun > 0){
+                oos.writeObject("Sunday="+sun);}
+
+      oos.close();
+      fos.close();
+    }catch(FileNotFoundException e){
+         
+     }catch(IOException e){
+         
+     }}
+      // Para éste complemento, podrás usar únicamente tus apuntes y la API de Java: https://docs.oracle.com/javase/8/docs/api/
+    }
+
+}
